@@ -1,0 +1,69 @@
+
+#include<iostream>
+#include<string>   // called library for string operations
+using namespace std;
+class Employee{  // created class Employee
+  private:
+  string name;
+  int employeeID;
+  double BasicSalary;
+  static int employeeCount;
+  public:
+  Employee(){  // initializing default constructor.
+    name="";
+    employeeID=0;
+    BasicSalary=0.0;
+    employeeCount++;
+  }
+  Employee(string empName, int empID, double BasicSal){ //parameterized
+    name=empName;
+    employeeID=empID;
+    BasicSalary=BasicSal;
+    employeeCount++;
+  }
+  double calculateGrossSalary(){ // function to calculate gross salary
+    double DA=0.10*BasicSalary;
+    double  HRA=0.05*BasicSalary;
+    return BasicSalary + DA + HRA;
+  }
+  void displayEmployee(){  // function to display employee information
+    cout<<"Employee Name   :"<<name<<endl;
+    cout<<"Employee ID     :"<<employeeID<<endl;
+    cout<<"Basic Salary    :"<<BasicSalary<<endl;
+    cout<<"Gross Salary    :"<<calculateGrossSalary()<<endl;
+  }
+  static int getEmployeeCount(){  // function to get total number of employees
+    return employeeCount;
+  }
+  void inputEmployee(){ // function to input employee details.
+    cin.ignore();
+    cout<<"Enter the employee name:";
+    getline(cin,name);
+    cout<<"Enter the employee ID:";
+    cin>>employeeID;
+    cout<<"Enter the basic salary:";
+    cin>> BasicSalary;
+  }
+};
+int Employee::employeeCount = 0; // initializing static member 
+int main(){
+  int n;
+  cout<<"Enter the number of employees:";
+  cin>>n;
+  cin.ignore();
+  Employee* employees = new Employee[n]; // dynamic array of Employee objects
+  for(int i=0;i<n;i++){
+      cout<<"______Enter Employee "<<(i+1)<<" details:______"<<endl;
+      employees[i].inputEmployee(); // Initialize each employee
+  }
+  cout<<"-------Displaying Employee Details-------"<<endl;
+  for(int i=0;i<n;i++){
+    cout<<"----Employee "<<(i+1)<<"Details:----"<<endl;
+    employees[i].displayEmployee();
+  }
+  cout<<"Total number of employees :"<<Employee::getEmployeeCount()<<endl;
+  
+  delete[] employees; // free dynamically allocated memory
+  return 0;
+}
+
